@@ -30,9 +30,6 @@ final class SalesOrder extends AbstractDataTransferObject
 
     public ?PickAgainReason $pickAgainReason;
 
-    /** @var list<SalesOrderLine> */
-    public array $orderLines = [];
-
     /**
      * @param list<SalesOrderLine> $orderLines
      */
@@ -84,7 +81,8 @@ final class SalesOrder extends AbstractDataTransferObject
         public ?Address $senderAddress = null,
         public ?string $sendWithOrder = null,
         public bool $generateAndPrintDeliveryNote = false,
-        array $orderLines = [],
+        /** @var list<SalesOrderLine> $orderLines */
+        public array $orderLines = [],
     ) {
         $this->orderId = (string) $orderId;
         $this->orderNumber = (string) $orderNumber;
@@ -94,16 +92,5 @@ final class SalesOrder extends AbstractDataTransferObject
         $this->onHoldReason = self::convertEnum($onHoldReason, OnHoldReason::class);
         $this->paymentStatus = self::convertEnum($paymentStatus, PaymentStatus::class);
         $this->pickAgainReason = self::convertEnum($pickAgainReason, PickAgainReason::class);
-
-        foreach ($orderLines as $orderLine) {
-            $this->addOrderLine($orderLine);
-        }
-    }
-
-    public function addOrderLine(SalesOrderLine $orderLine): self
-    {
-        $this->orderLines[] = $orderLine;
-
-        return $this;
     }
 }
