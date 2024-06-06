@@ -1,0 +1,109 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Setono\PeakWMS\DataTransferObject\SalesOrder;
+
+use DateTimeImmutable;
+use Setono\PeakWMS\DataTransferObject\AbstractDataTransferObject;
+use Setono\PeakWMS\DataTransferObject\Address;
+use Setono\PeakWMS\DataTransferObject\SalesOrder\OrderLine\SalesOrderLine;
+
+/**
+ * See https://api.peakwms.com/api/documentation/index.html#model-SalesOrder
+ */
+final class SalesOrder extends AbstractDataTransferObject
+{
+    public string $orderId;
+
+    public string $orderNumber;
+
+    public ?DateTimeImmutable $orderDateTime = null;
+
+    public ?DateTimeImmutable $requestedDeliveryDate = null;
+
+    public ?State $state;
+
+    public ?OnHoldReason $onHoldReason;
+
+    public ?PaymentStatus $paymentStatus;
+
+    public ?PickAgainReason $pickAgainReason;
+
+    /** @var list<SalesOrderLine> */
+    public array $orderLines = [];
+
+    /**
+     * @param list<SalesOrderLine> $orderLines
+     */
+    public function __construct(
+        /** The ID of the order in the host system. This ID is used by PeakWMS webhooks to report back on the order. */
+        int|string $orderId,
+        /**
+         * Notice that the API says this is a required field, however, if you submit an id that is not mapped in Peak WMS
+         * the API will return null in this field, and we need to support that in the DTO.
+         */
+        public ?string $forwarderProductId,
+        /** Running Order Number. This can be different from OrderId. */
+        int|string $orderNumber,
+        public Address $billingAddress,
+        public ?string $comment = null,
+        public ?string $webshopComment = null,
+        public ?string $parcelShopId = null,
+        DateTimeImmutable|string $orderDateTime = null,
+        DateTimeImmutable|string $requestedDeliveryDate = null,
+        /** @var int<1, 10>|null $priority */
+        public ?int $priority = null,
+        int|State $state = null,
+        int|OnHoldReason $onHoldReason = null,
+        public ?string $paymentMethod = null,
+        public ?float $paymentFee = null,
+        public ?float $paymentFeeTax = null,
+        public ?float $currencyDifference = null,
+        /**
+         * A valid currency ISO code
+         */
+        public ?string $salesCurrency = null,
+        public ?float $shippingCost = null,
+        public ?float $shippingTaxCost = null,
+        public ?float $discountCost = null,
+        public ?float $discountTaxCost = null,
+        public ?float $totalSalesPrice = null,
+        /**
+         * Transaction number that is used to capture or refund transaction in through the payment integration.
+         * It is very important that this transaction number is referencing directly to the transaction that can be captured or refunded.
+         * Otherwise, PeakWMS will not be able to find and capture the order in the payment integration.
+         */
+        public ?string $transactionNumber = null,
+        public bool $giftWrap = false,
+        public ?string $customerReference = null,
+        int|PaymentStatus $paymentStatus = null,
+        int|PickAgainReason $pickAgainReason = null,
+        public ?string $storeId = null,
+        public ?Address $shippingAddress = null,
+        public ?Address $senderAddress = null,
+        public ?string $sendWithOrder = null,
+        public bool $generateAndPrintDeliveryNote = false,
+        array $orderLines = [],
+    ) {
+        $this->orderId = (string) $orderId;
+        $this->orderNumber = (string) $orderNumber;
+        $this->orderDateTime = self::convertDateTime($orderDateTime);
+        $this->requestedDeliveryDate = self::convertDateTime($requestedDeliveryDate);
+        $this->state = self::convertEnum($state, State::class);
+        $this->onHoldReason = self::convertEnum($onHoldReason, OnHoldReason::class);
+        $this->paymentStatus = self::convertEnum($paymentStatus, PaymentStatus::class);
+        $this->pickAgainReason = self::convertEnum($pickAgainReason, PickAgainReason::class);
+
+        foreach ($orderLines as $orderLine) {
+            $this->addOrderLine($orderLine);
+        }
+    }
+
+    public function addOrderLine(SalesOrderLine $orderLine): self
+    {
+        $this->orderLines[] = $orderLine;
+
+        return $this;
+    }
+}

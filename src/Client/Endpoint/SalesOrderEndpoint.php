@@ -1,0 +1,25 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Setono\PeakWMS\Client\Endpoint;
+
+use Setono\PeakWMS\DataTransferObject\SalesOrder\SalesOrder;
+
+/**
+ * @extends Endpoint<SalesOrder>
+ */
+final class SalesOrderEndpoint extends Endpoint implements SalesOrderEndpointInterface
+{
+    /**
+     * @use CreatableEndpointTrait<SalesOrder>
+     */
+    use CreatableEndpointTrait;
+
+    use DeletableEndpointTrait;
+
+    protected static function getResponseClass(): string
+    {
+        return SalesOrder::class;
+    }
+}
