@@ -35,16 +35,19 @@ abstract class AbstractDataTransferObject implements \JsonSerializable
         });
     }
 
-    protected static function convertDateTime(null|\DateTimeImmutable|string $dateTime): ?\DateTimeImmutable
+    /**
+     * @throws \InvalidArgumentException if the value is not a valid date time string
+     */
+    protected static function convertDateTime(null|\DateTimeImmutable|string $value): ?\DateTimeImmutable
     {
-        if (null === $dateTime || $dateTime instanceof \DateTimeImmutable) {
-            return $dateTime;
+        if (null === $value || $value instanceof \DateTimeImmutable) {
+            return $value;
         }
 
-        $dateTime = \DateTimeImmutable::createFromFormat(\DATE_ATOM, $dateTime);
-        Assert::notFalse($dateTime);
+        $value = \DateTimeImmutable::createFromFormat(\DATE_ATOM, $value);
+        Assert::notFalse($value);
 
-        return $dateTime;
+        return $value;
     }
 
     /**
@@ -54,6 +57,8 @@ abstract class AbstractDataTransferObject implements \JsonSerializable
      * @param class-string<T> $enumClass
      *
      * @return T|null
+     *
+     * @throws \InvalidArgumentException if the value is not an instance of the enum class
      */
     protected static function convertEnum(null|int|string|\BackedEnum $value, string $enumClass): ?\BackedEnum
     {
