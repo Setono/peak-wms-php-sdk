@@ -16,7 +16,39 @@ composer require setono/peak-wms-php-sdk
 
 ## Usage
 
-TODO
+### Create sales order
+
+```php
+<?php
+use Setono\PeakWMS\Client\Client;
+use Setono\PeakWMS\DataTransferObject\Address;
+use Setono\PeakWMS\DataTransferObject\SalesOrder\OrderLine\SalesOrderLine;
+use Setono\PeakWMS\DataTransferObject\SalesOrder\SalesOrder;
+
+$client = new Client('your_api_key');
+
+$salesOrder = new SalesOrder(
+    orderId: 'order_in_your_store',
+    forwarderProductId: 'usually_your_shipping_method_id',
+    orderNumber: 'order_number_in_your_store',
+    billingAddress: new Address(
+        customerName: 'John Doe',
+        address1: 'Hobrovej 1',
+        postalCode: '9000',
+        city: 'Aalborg',
+        country: 'DK',
+        email: 'johndoe@google.com',
+        phone: '33762234',
+    ),
+);
+
+$salesOrder->orderLines[] = new SalesOrderLine(
+    orderLineId: 'order_line_id_in_your_store',
+    quantityRequested: 1,
+    productId: 'BLUE_TSHIRT-L',
+);
+$client->salesOrder()->create($salesOrder);
+```
 
 ## Production usage
 
