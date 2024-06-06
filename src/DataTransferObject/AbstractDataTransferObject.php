@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Setono\PeakWMS\DataTransferObject;
 
-use Webmozart\Assert\Assert;
-
 abstract class AbstractDataTransferObject implements \JsonSerializable
 {
     public function jsonSerialize(): array
@@ -44,10 +42,12 @@ abstract class AbstractDataTransferObject implements \JsonSerializable
             return $value;
         }
 
-        $value = \DateTimeImmutable::createFromFormat(\DATE_ATOM, $value);
-        Assert::notFalse($value);
+        $res = \DateTimeImmutable::createFromFormat(\DATE_ATOM, $value);
+        if (false === $res) {
+            throw new \InvalidArgumentException(sprintf('The value %s is not a valid date time string based on the format %s', $value, \DATE_ATOM));
+        }
 
-        return $value;
+        return $res;
     }
 
     /**
@@ -67,7 +67,9 @@ abstract class AbstractDataTransferObject implements \JsonSerializable
         }
 
         if ($value instanceof \BackedEnum) {
-            Assert::isInstanceOf($value, $enumClass);
+            if (!is_a($value, $enumClass)) {
+                throw new \InvalidArgumentException(sprintf('The value %s is not an instance of the enum class %s', $value::class, $enumClass));
+            }
 
             return $value;
         }
