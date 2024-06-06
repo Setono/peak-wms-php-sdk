@@ -28,7 +28,6 @@ final class SalesOrderTest extends TestCase
                 country: 'DK',
             ),
             orderDateTime: $now->format(\DATE_ATOM),
-            state: 3,
         );
 
         self::assertSame('123', $salesOrder->orderId);
@@ -36,6 +35,5 @@ final class SalesOrderTest extends TestCase
         self::assertSame('123', $salesOrder->orderNumber);
         self::assertInstanceOf(Address::class, $salesOrder->billingAddress);
         self::assertSame($now->format(\DATE_ATOM), $salesOrder->orderDateTime?->format(\DATE_ATOM));
-        self::assertSame(State::Packed, $salesOrder->state);
     }
 }

@@ -22,14 +22,6 @@ final class SalesOrder extends AbstractDataTransferObject
 
     public ?DateTimeImmutable $requestedDeliveryDate = null;
 
-    public ?State $state;
-
-    public ?OnHoldReason $onHoldReason;
-
-    public ?PaymentStatus $paymentStatus;
-
-    public ?PickAgainReason $pickAgainReason;
-
     /**
      * @param list<SalesOrderLine> $orderLines
      */
@@ -51,8 +43,8 @@ final class SalesOrder extends AbstractDataTransferObject
         DateTimeImmutable|string $requestedDeliveryDate = null,
         /** @var int<1, 10>|null $priority */
         public ?int $priority = null,
-        int|State $state = null,
-        int|OnHoldReason $onHoldReason = null,
+        public ?State $state = null,
+        public ?OnHoldReason $onHoldReason = null,
         public ?string $paymentMethod = null,
         public ?float $paymentFee = null,
         public ?float $paymentFeeTax = null,
@@ -74,8 +66,8 @@ final class SalesOrder extends AbstractDataTransferObject
         public ?string $transactionNumber = null,
         public bool $giftWrap = false,
         public ?string $customerReference = null,
-        int|PaymentStatus $paymentStatus = null,
-        int|PickAgainReason $pickAgainReason = null,
+        public ?PaymentStatus $paymentStatus = null,
+        public ?PickAgainReason $pickAgainReason = null,
         public ?string $storeId = null,
         public ?Address $shippingAddress = null,
         public ?Address $senderAddress = null,
@@ -88,9 +80,5 @@ final class SalesOrder extends AbstractDataTransferObject
         $this->orderNumber = (string) $orderNumber;
         $this->orderDateTime = self::convertDateTime($orderDateTime);
         $this->requestedDeliveryDate = self::convertDateTime($requestedDeliveryDate);
-        $this->state = self::convertEnum($state, State::class);
-        $this->onHoldReason = self::convertEnum($onHoldReason, OnHoldReason::class);
-        $this->paymentStatus = self::convertEnum($paymentStatus, PaymentStatus::class);
-        $this->pickAgainReason = self::convertEnum($pickAgainReason, PickAgainReason::class);
     }
 }

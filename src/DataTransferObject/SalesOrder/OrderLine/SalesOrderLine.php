@@ -14,8 +14,6 @@ final class SalesOrderLine extends AbstractDataTransferObject
 
     public ?string $variantId;
 
-    public ?State $state;
-
     public function __construct(
         int|string $orderLineId,
         /**
@@ -32,13 +30,12 @@ final class SalesOrderLine extends AbstractDataTransferObject
         public ?float $salesDiscountPiece = null,
         public ?float $salesDiscountTaxPiece = null,
         public ?string $comments = null,
-        State|int $state = null,
+        public ?State $state = null,
         public ?int $materialId = null,
         public ?int $sendAgainQuantity = null,
     ) {
         $this->orderLineId = (string) $orderLineId;
         $this->productId = (string) $productId;
         $this->variantId = null === $variantId ? null : (string) $variantId;
-        $this->state = self::convertEnum($state, State::class);
     }
 }

@@ -49,32 +49,4 @@ abstract class AbstractDataTransferObject implements \JsonSerializable
 
         return $res;
     }
-
-    /**
-     * @template T of \BackedEnum
-     *
-     * @param int|string|T|null $value
-     * @param class-string<T> $enumClass
-     *
-     * @return T|null
-     *
-     * @throws \InvalidArgumentException if the value is not an instance of the enum class
-     */
-    protected static function convertEnum(null|int|string|\BackedEnum $value, string $enumClass): ?\BackedEnum
-    {
-        if (null === $value) {
-            return null;
-        }
-
-        if ($value instanceof \BackedEnum) {
-            if (!is_a($value, $enumClass)) {
-                throw new \InvalidArgumentException(sprintf('The value %s is not an instance of the enum class %s', $value::class, $enumClass));
-            }
-
-            return $value;
-        }
-
-        /** @psalm-suppress PossiblyInvalidArgument */
-        return $enumClass::from($value);
-    }
 }
