@@ -18,7 +18,7 @@ final class SalesOrderEndpoint extends Endpoint implements SalesOrderEndpointInt
 
     use DeletableEndpointTrait;
 
-    protected static function getResponseClass(): string
+    protected static function getDataClass(): string
     {
         return SalesOrder::class;
     }

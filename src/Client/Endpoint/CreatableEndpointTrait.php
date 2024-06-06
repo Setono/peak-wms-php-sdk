@@ -22,7 +22,7 @@ trait CreatableEndpointTrait
             ->mapperBuilder
             ->mapper()
             ->map(
-                self::getResponseClass(),
+                self::getDataClass(),
                 $this->createSource(
                     $this->client->post($this->endpoint, $data),
                 ),

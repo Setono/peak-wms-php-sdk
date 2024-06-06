@@ -62,5 +62,5 @@ abstract class Endpoint implements EndpointInterface, LoggerAwareInterface
     /**
      * @return class-string<T>
      */
-    abstract protected static function getResponseClass(): string;
+    abstract protected static function getDataClass(): string;
 }
