@@ -17,6 +17,8 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Setono\PeakWMS\Client\Endpoint\SalesOrderEndpoint;
 use Setono\PeakWMS\Client\Endpoint\SalesOrderEndpointInterface;
+use Setono\PeakWMS\Client\Endpoint\WebhookEndpoint;
+use Setono\PeakWMS\Client\Endpoint\WebhookEndpointInterface;
 use Setono\PeakWMS\Exception\InternalServerErrorException;
 use Setono\PeakWMS\Exception\NotAuthorizedException;
 use Setono\PeakWMS\Exception\NotFoundException;
@@ -32,6 +34,8 @@ final class Client implements ClientInterface, LoggerAwareInterface
     private ?ResponseInterface $lastResponse = null;
 
     private ?SalesOrderEndpointInterface $salesOrderEndpoint = null;
+
+    private ?WebhookEndpointInterface $webhookEndpoint = null;
 
     private ?HttpClientInterface $httpClient = null;
 
@@ -128,6 +132,16 @@ final class Client implements ClientInterface, LoggerAwareInterface
         }
 
         return $this->salesOrderEndpoint;
+    }
+
+    public function webhook(): WebhookEndpointInterface
+    {
+        if (null === $this->webhookEndpoint) {
+            $this->webhookEndpoint = new WebhookEndpoint($this, $this->getMapperBuilder(), 'webhook');
+            $this->webhookEndpoint->setLogger($this->logger);
+        }
+
+        return $this->webhookEndpoint;
     }
 
     public function setMapperBuilder(MapperBuilder $mapperBuilder): void

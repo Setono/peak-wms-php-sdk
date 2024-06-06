@@ -8,6 +8,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Setono\PeakWMS\Client\Endpoint\SalesOrderEndpointInterface;
+use Setono\PeakWMS\Client\Endpoint\WebhookEndpointInterface;
 use Setono\PeakWMS\Exception\InternalServerErrorException;
 use Setono\PeakWMS\Exception\NotFoundException;
 use Setono\PeakWMS\Exception\UnexpectedStatusCodeException;
@@ -48,4 +49,6 @@ interface ClientInterface
     public function delete(string $uri, int $id): ResponseInterface;
 
     public function salesOrder(): SalesOrderEndpointInterface;
+
+    public function webhook(): WebhookEndpointInterface;
 }
