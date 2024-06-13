@@ -12,9 +12,9 @@ use Setono\PeakWMS\DataTransferObject\AbstractDataTransferObject;
 final class Webhook extends AbstractDataTransferObject
 {
     public function __construct(
+        public ?int $id = null,
         public ?Name $name = null,
         public ?string $url = null,
-        public ?int $id = null,
     ) {
     }
 }
