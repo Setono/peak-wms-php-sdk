@@ -15,12 +15,12 @@ final class SalesOrderLine extends AbstractDataTransferObject
     public ?string $variantId;
 
     public function __construct(
-        int|string $orderLineId,
+        int|string|null $orderLineId = null,
         /**
-         * @var positive-int $quantityRequested
+         * @var positive-int|null $quantityRequested
          */
-        public int $quantityRequested,
-        int|string $productId,
+        public ?int $quantityRequested = null,
+        int|string|null $productId = null,
         public ?string $lotNumber = null,
         int|string $variantId = null,
         public ?string $pickingSequenceName = null,
@@ -36,6 +36,6 @@ final class SalesOrderLine extends AbstractDataTransferObject
     ) {
         $this->orderLineId = (string) $orderLineId;
         $this->productId = (string) $productId;
-        $this->variantId = null === $variantId ? null : (string) $variantId;
+        $this->variantId = (string) $variantId;
     }
 }

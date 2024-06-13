@@ -14,6 +14,8 @@ use Setono\PeakWMS\DataTransferObject\AbstractDataTransferObject;
 trait CreatableEndpointTrait
 {
     /**
+     * @param T|AbstractDataTransferObject $data
+     *
      * @return T
      */
     public function create(AbstractDataTransferObject $data): AbstractDataTransferObject

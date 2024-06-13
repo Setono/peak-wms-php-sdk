@@ -27,15 +27,11 @@ final class SalesOrder extends AbstractDataTransferObject
      */
     public function __construct(
         /** The ID of the order in the host system. This ID is used by PeakWMS webhooks to report back on the order. */
-        int|string $orderId,
-        /**
-         * Notice that the API says this is a required field, however, if you submit an id that is not mapped in Peak WMS
-         * the API will return null in this field, and we need to support that in the DTO.
-         */
-        public ?string $forwarderProductId,
+        int|string|null $orderId = null,
+        public ?string $forwarderProductId = null,
         /** Running Order Number. This can be different from OrderId. */
-        int|string $orderNumber,
-        public Address $billingAddress,
+        int|string|null $orderNumber = null,
+        public ?Address $billingAddress = null,
         public ?string $comment = null,
         public ?string $webshopComment = null,
         public ?string $parcelShopId = null,
