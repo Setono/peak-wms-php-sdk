@@ -36,10 +36,14 @@ abstract class AbstractDataTransferObject implements \JsonSerializable
     /**
      * @throws \InvalidArgumentException if the value is not a valid date time string
      */
-    protected static function convertDateTime(null|\DateTimeImmutable|string $value): ?\DateTimeImmutable
+    protected static function convertDateTime(null|\DateTimeInterface|string $value): ?\DateTimeImmutable
     {
         if (null === $value || $value instanceof \DateTimeImmutable) {
             return $value;
+        }
+
+        if ($value instanceof \DateTimeInterface) {
+            return \DateTimeImmutable::createFromInterface($value);
         }
 
         $res = \DateTimeImmutable::createFromFormat(\DATE_ATOM, $value);

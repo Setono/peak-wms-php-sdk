@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Setono\PeakWMS\DataTransferObject\SalesOrder;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 use Setono\PeakWMS\DataTransferObject\AbstractDataTransferObject;
 use Setono\PeakWMS\DataTransferObject\Address;
 use Setono\PeakWMS\DataTransferObject\SalesOrder\OrderLine\SalesOrderLine;
@@ -35,8 +36,8 @@ final class SalesOrder extends AbstractDataTransferObject
         public ?string $comment = null,
         public ?string $webshopComment = null,
         public ?string $parcelShopId = null,
-        DateTimeImmutable|string $orderDateTime = null,
-        DateTimeImmutable|string $requestedDeliveryDate = null,
+        DateTimeInterface|string $orderDateTime = null,
+        DateTimeInterface|string $requestedDeliveryDate = null,
         /** @var int<1, 10>|null $priority */
         public ?int $priority = null,
         public ?State $state = null,
