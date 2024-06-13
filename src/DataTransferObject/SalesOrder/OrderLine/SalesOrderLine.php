@@ -16,9 +16,6 @@ final class SalesOrderLine extends AbstractDataTransferObject
 
     public function __construct(
         int|string|null $orderLineId = null,
-        /**
-         * @var positive-int|null $quantityRequested
-         */
         public ?int $quantityRequested = null,
         int|string|null $productId = null,
         public ?string $lotNumber = null,
