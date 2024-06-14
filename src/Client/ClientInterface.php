@@ -48,6 +48,11 @@ interface ClientInterface
 
     public function delete(string $uri, int $id): ResponseInterface;
 
+    /**
+     * Will try to ping the Peak WMS API
+     */
+    public function ping(): void;
+
     public function salesOrder(): SalesOrderEndpointInterface;
 
     public function webhook(): WebhookEndpointInterface;
