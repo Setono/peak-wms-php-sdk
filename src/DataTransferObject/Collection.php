@@ -12,7 +12,7 @@ namespace Setono\PeakWMS\DataTransferObject;
 final class Collection implements \IteratorAggregate, \Countable
 {
     /** @var list<T> */
-    public array $items;
+    private array $items;
 
     /**
      * @param list<T> $items
@@ -38,5 +38,23 @@ final class Collection implements \IteratorAggregate, \Countable
     public function count(): int
     {
         return count($this->items);
+    }
+
+    /**
+     * @param callable(T):bool $callback
+     *
+     * @return self<T>
+     */
+    public function filter(callable $callback): self
+    {
+        return new self(array_values(array_filter($this->items, $callback)));
+    }
+
+    /**
+     * @return list<T>
+     */
+    public function toArray(): array
+    {
+        return $this->items;
     }
 }
