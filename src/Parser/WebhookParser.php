@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Setono\PeakWMS\Consumer;
+namespace Setono\PeakWMS\Parser;
 
 use CuyZ\Valinor\MapperBuilder;
 use Setono\PeakWMS\DataTransferObject\Webhook\Name;
 use Setono\PeakWMS\DataTransferObject\Webhook\WebhookDataPickOrderPacked;
 use Setono\PeakWMS\DataTransferObject\Webhook\WebhookDataStockAdjust;
 
-final class WebhookConsumer implements WebhookConsumerInterface
+final class WebhookParser implements WebhookParserInterface
 {
     private ?MapperBuilder $mapperBuilder = null;
 
-    public function consume(string $json, string $dataClass): object
+    public function parse(string $json, string $dataClass): object
     {
         return $this
             ->getMapperBuilder()

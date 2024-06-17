@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Setono\PeakWMS\Consumer;
+namespace Setono\PeakWMS\Parser;
 
-interface WebhookConsumerInterface
+interface WebhookParserInterface
 {
     /**
      * @template T
@@ -13,5 +13,5 @@ interface WebhookConsumerInterface
      *
      * @return T
      */
-    public function consume(string $json, string $dataClass): object;
+    public function parse(string $json, string $dataClass): object;
 }
