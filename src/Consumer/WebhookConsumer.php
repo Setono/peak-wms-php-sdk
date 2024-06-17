@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Setono\PeakWMS\Consumer;
 
 use CuyZ\Valinor\MapperBuilder;
+use Setono\PeakWMS\DataTransferObject\Webhook\Name;
+use Setono\PeakWMS\DataTransferObject\Webhook\WebhookDataStockAdjust;
 
 final class WebhookConsumer implements WebhookConsumerInterface
 {
@@ -35,5 +37,20 @@ final class WebhookConsumer implements WebhookConsumerInterface
         }
 
         return $this->mapperBuilder;
+    }
+
+    /**
+     * @return class-string
+     */
+    public static function convertNameToDataClass(Name|int $name): string
+    {
+        if (is_int($name)) {
+            $name = Name::from($name);
+        }
+
+        return match ($name) {
+            Name::StockAdjust => WebhookDataStockAdjust::class,
+            default => throw new \InvalidArgumentException(sprintf('The name "%d" is not supported', $name->value)),
+        };
     }
 }
