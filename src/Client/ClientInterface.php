@@ -7,6 +7,7 @@ namespace Setono\PeakWMS\Client;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Setono\PeakWMS\Client\Endpoint\ProductEndpointInterface;
 use Setono\PeakWMS\Client\Endpoint\SalesOrderEndpointInterface;
 use Setono\PeakWMS\Client\Endpoint\WebhookEndpointInterface;
 use Setono\PeakWMS\Exception\InternalServerErrorException;
@@ -52,6 +53,8 @@ interface ClientInterface
      * Will try to ping the Peak WMS API
      */
     public function ping(): void;
+
+    public function product(): ProductEndpointInterface;
 
     public function salesOrder(): SalesOrderEndpointInterface;
 

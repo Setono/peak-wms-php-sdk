@@ -15,6 +15,8 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Setono\PeakWMS\Client\Endpoint\ProductEndpoint;
+use Setono\PeakWMS\Client\Endpoint\ProductEndpointInterface;
 use Setono\PeakWMS\Client\Endpoint\SalesOrderEndpoint;
 use Setono\PeakWMS\Client\Endpoint\SalesOrderEndpointInterface;
 use Setono\PeakWMS\Client\Endpoint\WebhookEndpoint;
@@ -32,6 +34,8 @@ final class Client implements ClientInterface, LoggerAwareInterface
     private ?RequestInterface $lastRequest = null;
 
     private ?ResponseInterface $lastResponse = null;
+
+    private ?ProductEndpointInterface $productEndpoint = null;
 
     private ?SalesOrderEndpointInterface $salesOrderEndpoint = null;
 
@@ -122,6 +126,16 @@ final class Client implements ClientInterface, LoggerAwareInterface
     public function ping(): void
     {
         $this->get('ping');
+    }
+
+    public function product(): ProductEndpointInterface
+    {
+        if (null === $this->productEndpoint) {
+            $this->productEndpoint = new ProductEndpoint($this, $this->getMapperBuilder(), 'product');
+            $this->productEndpoint->setLogger($this->logger);
+        }
+
+        return $this->productEndpoint;
     }
 
     public function salesOrder(): SalesOrderEndpointInterface
