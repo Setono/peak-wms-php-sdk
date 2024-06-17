@@ -6,6 +6,7 @@ namespace Setono\PeakWMS\Consumer;
 
 use CuyZ\Valinor\MapperBuilder;
 use Setono\PeakWMS\DataTransferObject\Webhook\Name;
+use Setono\PeakWMS\DataTransferObject\Webhook\WebhookDataPickOrderPacked;
 use Setono\PeakWMS\DataTransferObject\Webhook\WebhookDataStockAdjust;
 
 final class WebhookConsumer implements WebhookConsumerInterface
@@ -50,6 +51,7 @@ final class WebhookConsumer implements WebhookConsumerInterface
 
         return match ($name) {
             Name::StockAdjust => WebhookDataStockAdjust::class,
+            Name::PickOrderPacked => WebhookDataPickOrderPacked::class,
             default => throw new \InvalidArgumentException(sprintf('The name "%d" is not supported', $name->value)),
         };
     }
