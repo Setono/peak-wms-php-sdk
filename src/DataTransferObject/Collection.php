@@ -8,8 +8,9 @@ namespace Setono\PeakWMS\DataTransferObject;
  * @template T of AbstractDataTransferObject
  *
  * @implements \IteratorAggregate<int, T>
+ * @implements \ArrayAccess<int, T>
  */
-final class Collection implements \IteratorAggregate, \Countable
+final class Collection implements \IteratorAggregate, \Countable, \ArrayAccess
 {
     /** @var list<T> */
     private array $items;
@@ -28,7 +29,7 @@ final class Collection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return \ArrayIterator<int<0, max>, T>
+     * @return \ArrayIterator<int<0,max>, T>
      */
     public function getIterator(): \ArrayIterator
     {
@@ -56,5 +57,39 @@ final class Collection implements \IteratorAggregate, \Countable
     public function toArray(): array
     {
         return $this->items;
+    }
+
+    /**
+     * @psalm-assert-if-true T $this->items[$offset]
+     */
+    public function offsetExists(mixed $offset): bool
+    {
+        return isset($this->items[$offset]);
+    }
+
+    /**
+     * @return T
+     */
+    public function offsetGet(mixed $offset): object
+    {
+        if (!is_int($offset)) {
+            throw new \InvalidArgumentException('The offset must be an integer');
+        }
+
+        if (!$this->offsetExists($offset)) {
+            throw new \OutOfBoundsException(sprintf('The offset %s does not exist', $offset));
+        }
+
+        return $this->items[$offset];
+    }
+
+    public function offsetSet(mixed $offset, mixed $value): void
+    {
+        throw new \BadMethodCallException('You cannot set an item in a collection');
+    }
+
+    public function offsetUnset(mixed $offset): void
+    {
+        throw new \BadMethodCallException('You cannot unset an item in a collection');
     }
 }
