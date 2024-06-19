@@ -28,7 +28,7 @@ final class SalesOrder extends AbstractDataTransferObject
      */
     public function __construct(
         /** Internal ID for order in PeakWMS */
-        protected ?int $id = null,
+        public ?int $id = null,
         /** The ID of the order in the host system. This ID is used by PeakWMS webhooks to report back on the order. */
         int|string|null $orderId = null,
         public ?string $forwarderProductId = null,
