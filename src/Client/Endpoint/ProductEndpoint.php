@@ -57,7 +57,7 @@ final class ProductEndpoint extends Endpoint implements ProductEndpointInterface
     }
 
     /**
-     * @return \Generator<array-key, Product>
+     * @return \Generator<Product>
      */
     public function iterate(PageQuery $query = null): \Generator
     {
