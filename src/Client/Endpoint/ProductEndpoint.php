@@ -24,8 +24,10 @@ final class ProductEndpoint extends Endpoint implements ProductEndpointInterface
     /**
      * @return PaginatedCollection<Product>
      */
-    public function getPage(PageQuery $query): PaginatedCollection
+    public function getPage(PageQuery $query = null): PaginatedCollection
     {
+        $query ??= PageQuery::create();
+
         /** @var class-string<PaginatedCollection<Product>> $signature */
         $signature = sprintf('%s<%s>', PaginatedCollection::class, self::getDataClass());
 

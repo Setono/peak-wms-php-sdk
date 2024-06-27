@@ -18,7 +18,7 @@ interface ProductEndpointInterface extends EndpointInterface, CreatableEndpointI
     /**
      * @return PaginatedCollection<Product>
      */
-    public function getPage(PageQuery $query): PaginatedCollection;
+    public function getPage(PageQuery $query = null): PaginatedCollection;
 
     /**
      * @return Collection<Product>
