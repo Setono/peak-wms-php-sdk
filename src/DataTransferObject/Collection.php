@@ -10,7 +10,7 @@ namespace Setono\PeakWMS\DataTransferObject;
  * @implements \IteratorAggregate<int, T>
  * @implements \ArrayAccess<int, T>
  */
-final class Collection implements \IteratorAggregate, \Countable, \ArrayAccess
+class Collection implements \IteratorAggregate, \Countable, \ArrayAccess
 {
     /** @var list<T> */
     private array $items;
