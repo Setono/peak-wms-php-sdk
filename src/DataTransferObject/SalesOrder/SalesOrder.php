@@ -49,9 +49,9 @@ final class SalesOrder extends AbstractDataTransferObject
         public ?float $paymentFeeTax = null,
         public ?float $currencyDifference = null,
         /**
-         * A valid currency ISO code
+         * A valid currency ISO code or an integer representing the currency ID internally within Peak WMS
          */
-        public ?string $salesCurrency = null,
+        public null|string|int $salesCurrency = null,
         public ?float $shippingCost = null,
         public ?float $shippingTaxCost = null,
         public ?float $discountCost = null,
