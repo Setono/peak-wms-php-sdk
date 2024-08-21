@@ -116,6 +116,21 @@ final class Client implements ClientInterface, LoggerAwareInterface
         return $this->request($request);
     }
 
+    public function put(string $uri, array|object $body): ResponseInterface
+    {
+        $url = sprintf('%s/%s', $this->getBaseUri(), ltrim($uri, '/'));
+
+        $request = $this->getRequestFactory()
+            ->createRequest('PUT', $url)
+            ->withBody(
+                $this->getStreamFactory()
+                    ->createStream(json_encode($body, \JSON_THROW_ON_ERROR)),
+            )
+        ;
+
+        return $this->request($request);
+    }
+
     public function delete(string $uri, int $id): ResponseInterface
     {
         $url = sprintf('%s/%s/%d', $this->getBaseUri(), ltrim($uri, '/'), $id);

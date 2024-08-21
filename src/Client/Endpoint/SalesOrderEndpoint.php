@@ -18,6 +18,11 @@ final class SalesOrderEndpoint extends Endpoint implements SalesOrderEndpointInt
 
     use DeletableEndpointTrait;
 
+    /**
+     * @use UpdatableEndpointTrait<SalesOrder>
+     */
+    use UpdatableEndpointTrait;
+
     protected static function getDataClass(): string
     {
         return SalesOrder::class;
