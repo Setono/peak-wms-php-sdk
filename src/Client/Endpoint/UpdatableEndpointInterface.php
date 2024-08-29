@@ -12,7 +12,7 @@ use Setono\PeakWMS\DataTransferObject\AbstractDataTransferObject;
 interface UpdatableEndpointInterface
 {
     /**
-     * @param mixed $id This is (most likely) the host id
+     * @param mixed|null $id This is (most likely) the host id. Some endpoints require this to be set
      */
-    public function update(mixed $id, AbstractDataTransferObject $data): void;
+    public function update(AbstractDataTransferObject $data, mixed $id = null): void;
 }

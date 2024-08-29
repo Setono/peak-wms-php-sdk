@@ -16,8 +16,9 @@ trait UpdatableEndpointTrait
     /**
      * @param T|AbstractDataTransferObject $data
      */
-    public function update(mixed $id, AbstractDataTransferObject $data): void
+    public function update(AbstractDataTransferObject $data, mixed $id = null): void
     {
-        $this->client->put(sprintf('%s/%s', $this->endpoint, (string) $id), $data);
+        $endpoint = null === $id ? $this->endpoint : sprintf('%s/%s', $this->endpoint, (string) $id);
+        $this->client->put($endpoint, $data);
     }
 }

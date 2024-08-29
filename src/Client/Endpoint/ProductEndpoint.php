@@ -22,6 +22,11 @@ final class ProductEndpoint extends Endpoint implements ProductEndpointInterface
     use DeletableEndpointTrait;
 
     /**
+     * @use UpdatableEndpointTrait<Product>
+     */
+    use UpdatableEndpointTrait;
+
+    /**
      * @return PaginatedCollection<Product>
      */
     public function getPage(PageQuery $query = null): PaginatedCollection
