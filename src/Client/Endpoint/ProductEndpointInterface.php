@@ -12,8 +12,9 @@ use Setono\PeakWMS\Request\Query\Product\PageQuery;
 /**
  * @extends EndpointInterface<Product>
  * @extends CreatableEndpointInterface<Product>
+ * @extends UpdatableEndpointInterface<Product>
  */
-interface ProductEndpointInterface extends EndpointInterface, CreatableEndpointInterface, DeletableEndpointInterface
+interface ProductEndpointInterface extends EndpointInterface, CreatableEndpointInterface, DeletableEndpointInterface, UpdatableEndpointInterface
 {
     /**
      * @return PaginatedCollection<Product>
