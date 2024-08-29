@@ -23,6 +23,11 @@ final class SalesOrderEndpoint extends Endpoint implements SalesOrderEndpointInt
      */
     use UpdatableEndpointTrait;
 
+    public function cancel(string $id): void
+    {
+        $this->client->put(sprintf('%s/%s/cancel', $this->endpoint, $id));
+    }
+
     protected static function getDataClass(): string
     {
         return SalesOrder::class;

@@ -13,4 +13,8 @@ use Setono\PeakWMS\DataTransferObject\SalesOrder\SalesOrder;
  */
 interface SalesOrderEndpointInterface extends EndpointInterface, CreatableEndpointInterface, DeletableEndpointInterface, UpdatableEndpointInterface
 {
+    /**
+     * @param string $id The host id
+     */
+    public function cancel(string $id): void;
 }

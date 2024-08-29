@@ -47,7 +47,7 @@ interface ClientInterface
 
     public function post(string $uri, array|object $body): ResponseInterface;
 
-    public function put(string $uri, array|object $body): ResponseInterface;
+    public function put(string $uri, array|object $body = null): ResponseInterface;
 
     public function delete(string $uri, int $id): ResponseInterface;
 
