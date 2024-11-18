@@ -9,6 +9,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Setono\PeakWMS\Client\Endpoint\ProductEndpointInterface;
 use Setono\PeakWMS\Client\Endpoint\SalesOrderEndpointInterface;
+use Setono\PeakWMS\Client\Endpoint\StockEndpointInterface;
 use Setono\PeakWMS\Client\Endpoint\WebhookEndpointInterface;
 use Setono\PeakWMS\Exception\InternalServerErrorException;
 use Setono\PeakWMS\Exception\NotFoundException;
@@ -59,6 +60,8 @@ interface ClientInterface
     public function product(): ProductEndpointInterface;
 
     public function salesOrder(): SalesOrderEndpointInterface;
+
+    public function stock(): StockEndpointInterface;
 
     public function webhook(): WebhookEndpointInterface;
 }

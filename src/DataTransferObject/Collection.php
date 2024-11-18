@@ -6,7 +6,6 @@ namespace Setono\PeakWMS\DataTransferObject;
 
 /**
  * @template T of AbstractDataTransferObject
- *
  * @implements \IteratorAggregate<int, T>
  * @implements \ArrayAccess<int, T>
  */

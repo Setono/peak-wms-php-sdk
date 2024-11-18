@@ -19,6 +19,8 @@ use Setono\PeakWMS\Client\Endpoint\ProductEndpoint;
 use Setono\PeakWMS\Client\Endpoint\ProductEndpointInterface;
 use Setono\PeakWMS\Client\Endpoint\SalesOrderEndpoint;
 use Setono\PeakWMS\Client\Endpoint\SalesOrderEndpointInterface;
+use Setono\PeakWMS\Client\Endpoint\StockEndpoint;
+use Setono\PeakWMS\Client\Endpoint\StockEndpointInterface;
 use Setono\PeakWMS\Client\Endpoint\WebhookEndpoint;
 use Setono\PeakWMS\Client\Endpoint\WebhookEndpointInterface;
 use Setono\PeakWMS\Exception\InternalServerErrorException;
@@ -38,6 +40,8 @@ final class Client implements ClientInterface, LoggerAwareInterface
     private ?ProductEndpointInterface $productEndpoint = null;
 
     private ?SalesOrderEndpointInterface $salesOrderEndpoint = null;
+
+    private ?StockEndpointInterface $stockEndpoint = null;
 
     private ?WebhookEndpointInterface $webhookEndpoint = null;
 
@@ -162,6 +166,16 @@ final class Client implements ClientInterface, LoggerAwareInterface
         }
 
         return $this->salesOrderEndpoint;
+    }
+
+    public function stock(): StockEndpointInterface
+    {
+        if (null === $this->stockEndpoint) {
+            $this->stockEndpoint = new StockEndpoint($this, $this->getMapperBuilder(), 'stock');
+            $this->stockEndpoint->setLogger($this->logger);
+        }
+
+        return $this->stockEndpoint;
     }
 
     public function webhook(): WebhookEndpointInterface

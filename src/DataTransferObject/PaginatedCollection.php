@@ -6,7 +6,6 @@ namespace Setono\PeakWMS\DataTransferObject;
 
 /**
  * @template T of AbstractDataTransferObject
- *
  * @extends Collection<T>
  */
 final class PaginatedCollection extends Collection

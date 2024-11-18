@@ -15,7 +15,6 @@ use Setono\PeakWMS\DataTransferObject\AbstractDataTransferObject;
 
 /**
  * @template T of AbstractDataTransferObject
- *
  * @implements EndpointInterface<T>
  */
 abstract class Endpoint implements EndpointInterface, LoggerAwareInterface
