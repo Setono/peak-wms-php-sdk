@@ -26,6 +26,7 @@ use Setono\PeakWMS\Client\Endpoint\WebhookEndpointInterface;
 use Setono\PeakWMS\Exception\InternalServerErrorException;
 use Setono\PeakWMS\Exception\NotAuthorizedException;
 use Setono\PeakWMS\Exception\NotFoundException;
+use Setono\PeakWMS\Exception\TooManyRequestsException;
 use Setono\PeakWMS\Exception\UnexpectedStatusCodeException;
 use Setono\PeakWMS\Request\Query\Query;
 
@@ -269,6 +270,7 @@ final class Client implements ClientInterface, LoggerAwareInterface
 
         NotAuthorizedException::assert($response);
         NotFoundException::assert($response);
+        TooManyRequestsException::assert($response);
         InternalServerErrorException::assert($response);
 
         throw new UnexpectedStatusCodeException($response);
