@@ -51,6 +51,8 @@ class Collection implements \IteratorAggregate, \Countable, \ArrayAccess
     }
 
     /**
+     * TODO Make this more type safe when this issue is resolved: https://github.com/vimeo/psalm/issues/11179
+     *
      * @param callable(T):numeric $callback
      */
     public function sum(callable $callback): int|float
