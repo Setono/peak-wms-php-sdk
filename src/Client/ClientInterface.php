@@ -37,7 +37,7 @@ interface ClientInterface
     public function request(RequestInterface $request): ResponseInterface;
 
     /**
-     * @param Query|array<string, scalar|\Stringable|\DateTimeInterface> $query
+     * @param Query|array<string, scalar|\Stringable|\DateTimeInterface|null> $query The query parameters. Parameters with null values are removed.
      *
      * @throws ClientExceptionInterface if an error happens while processing the request
      * @throws InternalServerErrorException if the server reports an internal server error

@@ -51,6 +51,14 @@ class Collection implements \IteratorAggregate, \Countable, \ArrayAccess
     }
 
     /**
+     * @param callable(T):numeric $callback
+     */
+    public function sum(callable $callback): int|float
+    {
+        return array_sum(array_map($callback, $this->items));
+    }
+
+    /**
      * @return list<T>
      */
     public function toArray(): array
