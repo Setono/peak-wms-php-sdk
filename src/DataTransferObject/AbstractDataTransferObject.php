@@ -34,6 +34,8 @@ abstract class AbstractDataTransferObject implements \JsonSerializable
     }
 
     /**
+     * @return ($value is null ? null : \DateTimeImmutable)
+     *
      * @throws \InvalidArgumentException if the value is not a valid date time string
      */
     public static function convertDateTime(null|\DateTimeInterface|string $value): ?\DateTimeImmutable
@@ -44,6 +46,11 @@ abstract class AbstractDataTransferObject implements \JsonSerializable
 
         if ($value instanceof \DateTimeInterface) {
             return \DateTimeImmutable::createFromInterface($value);
+        }
+
+        // TODO this is redundant, remove it when https://github.com/vimeo/psalm/issues/11178 is fixed
+        if (!is_string($value)) {
+            throw new \InvalidArgumentException('The given value is not a string');
         }
 
         $res = \DateTimeImmutable::createFromFormat(\DATE_ATOM, $value);
