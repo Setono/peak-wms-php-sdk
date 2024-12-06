@@ -7,7 +7,7 @@ namespace Setono\PeakWMS\Client\Endpoint;
 use Setono\PeakWMS\DataTransferObject\Collection;
 use Setono\PeakWMS\DataTransferObject\PaginatedCollection;
 use Setono\PeakWMS\DataTransferObject\Product\Product;
-use Setono\PeakWMS\Request\Query\Product\PageQuery;
+use Setono\PeakWMS\Request\Query\KeySetPageQuery;
 
 /**
  * @extends Endpoint<Product>
@@ -29,9 +29,9 @@ final class ProductEndpoint extends Endpoint implements ProductEndpointInterface
     /**
      * @return PaginatedCollection<Product>
      */
-    public function getPage(PageQuery $query = null): PaginatedCollection
+    public function getPage(KeySetPageQuery $query = null): PaginatedCollection
     {
-        $query ??= PageQuery::create();
+        $query ??= KeySetPageQuery::create();
 
         /** @var class-string<PaginatedCollection<Product>> $signature */
         $signature = sprintf('%s<%s>', PaginatedCollection::class, self::getDataClass());
@@ -42,7 +42,7 @@ final class ProductEndpoint extends Endpoint implements ProductEndpointInterface
             ->map(
                 $signature,
                 $this->createSource(
-                    $this->client->get($this->endpoint, $query),
+                    $this->client->get(sprintf('%s/keySet', $this->endpoint), $query),
                 )->map(['data' => 'items']),
             );
     }
@@ -66,16 +66,23 @@ final class ProductEndpoint extends Endpoint implements ProductEndpointInterface
     /**
      * @return \Generator<Product>
      */
-    public function iterate(PageQuery $query = null): \Generator
+    public function iterate(KeySetPageQuery $query = null): \Generator
     {
-        $query ??= PageQuery::create();
+        $query ??= KeySetPageQuery::create();
 
         do {
             $collection = $this->getPage($query);
 
-            yield from $collection;
+            $lastId = null;
 
-            $query->incrementPage();
+            foreach ($collection as $item) {
+                yield $item;
+                $lastId = $item->id;
+            }
+
+            if (null !== $lastId) {
+                $query->setLastId($lastId);
+            }
         } while (!$collection->empty());
     }
 

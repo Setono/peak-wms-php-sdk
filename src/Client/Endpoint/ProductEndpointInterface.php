@@ -7,7 +7,7 @@ namespace Setono\PeakWMS\Client\Endpoint;
 use Setono\PeakWMS\DataTransferObject\Collection;
 use Setono\PeakWMS\DataTransferObject\PaginatedCollection;
 use Setono\PeakWMS\DataTransferObject\Product\Product;
-use Setono\PeakWMS\Request\Query\Product\PageQuery;
+use Setono\PeakWMS\Request\Query\KeySetPageQuery;
 
 /**
  * @extends EndpointInterface<Product>
@@ -19,7 +19,7 @@ interface ProductEndpointInterface extends EndpointInterface, CreatableEndpointI
     /**
      * @return PaginatedCollection<Product>
      */
-    public function getPage(PageQuery $query = null): PaginatedCollection;
+    public function getPage(KeySetPageQuery $query = null): PaginatedCollection;
 
     /**
      * @return Collection<Product>
@@ -29,5 +29,5 @@ interface ProductEndpointInterface extends EndpointInterface, CreatableEndpointI
     /**
      * @return iterable<Product>
      */
-    public function iterate(PageQuery $query = null): iterable;
+    public function iterate(KeySetPageQuery $query = null): iterable;
 }
