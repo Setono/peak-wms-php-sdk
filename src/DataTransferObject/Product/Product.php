@@ -52,8 +52,8 @@ final class Product extends AbstractDataTransferObject
         public ?int $orderedByCustomers = null,
         public ?bool $production = null,
         public ?bool $autoAssignLot = null,
-        /** @var list<array{name: string, vendorName: string|null}> */
-        public array $vendors = [],
+        /** @var list<array{name: string, vendorName: string|null}>|null */
+        public ?array $vendors = null,
         /** @var list<string>|null */
         public ?array $allowedAreas = null,
         public ?string $dangerousGoodsClass = null,
