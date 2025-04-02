@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Setono\PeakWMS\Client\Endpoint;
 
 use Setono\PeakWMS\DataTransferObject\SalesOrder\SalesOrder;
+use Setono\PeakWMS\Exception\BadRequestException;
 
 /**
  * @extends Endpoint<SalesOrder>
@@ -25,7 +26,13 @@ final class SalesOrderEndpoint extends Endpoint implements SalesOrderEndpointInt
 
     public function cancel(string $id): void
     {
-        $this->client->put(sprintf('%s/%s/cancel', $this->endpoint, $id));
+        try {
+            $this->client->put(sprintf('%s/%s/cancel', $this->endpoint, $id));
+        } catch (BadRequestException $e) {
+            if (!str_contains($e->getMessage(), 'cannot be cancelled because it is in state CANCELLED')) {
+                throw $e;
+            }
+        }
     }
 
     protected static function getDataClass(): string
