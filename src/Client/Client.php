@@ -23,6 +23,7 @@ use Setono\PeakWMS\Client\Endpoint\StockEndpoint;
 use Setono\PeakWMS\Client\Endpoint\StockEndpointInterface;
 use Setono\PeakWMS\Client\Endpoint\WebhookEndpoint;
 use Setono\PeakWMS\Client\Endpoint\WebhookEndpointInterface;
+use Setono\PeakWMS\Exception\BadRequestException;
 use Setono\PeakWMS\Exception\InternalServerErrorException;
 use Setono\PeakWMS\Exception\NotAuthorizedException;
 use Setono\PeakWMS\Exception\NotFoundException;
@@ -268,6 +269,7 @@ final class Client implements ClientInterface, LoggerAwareInterface
             return;
         }
 
+        BadRequestException::assert($response);
         NotAuthorizedException::assert($response);
         NotFoundException::assert($response);
         TooManyRequestsException::assert($response);
